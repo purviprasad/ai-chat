@@ -1,50 +1,45 @@
+import { useState } from "react";
 import "./App.css";
-import UploadBox from "./components/UploadBox";
-import RAGChatWindow from "./components/RAGChatWindow";
+import LearningLayout from "./components/LearningLayout";
 import { useRagChat } from "./hooks/useRagChat";
 
 function App() {
-    const { messages, send, upload, loading, uploaded, error, reset } = useRagChat();
+    const [activeSection, setActiveSection] = useState("overview");
+    const rag = useRagChat();
 
     return (
         <div className="app">
             <div className="app-glow" aria-hidden />
             <header className="app-header">
                 <div className="app-brand">
+                    <p className="app-eyebrow">Learning build · MERN → AI integrations</p>
                     <div className="app-logo">
                         <span className="app-logo-mark" aria-hidden />
-                        PDF Chat
+                        AIChat lab
                     </div>
                     <p className="app-tagline">
-                        Upload a document, then ask grounded questions powered by your backend RAG
-                        pipeline.
+                        One UI for a 12–16 week roadmap: each phase explains what to learn and what to
+                        ship. Phase 1 (streaming) and Phase 2 (RAG) run against your local Node server.
                     </p>
                 </div>
-                <span className="app-pill">RAG demo</span>
+                <span className="app-pill">Hands-on</span>
             </header>
 
             <main className="app-main">
                 <div className="app-card">
                     <div className="app-card-inner">
-                        {!uploaded ? (
-                            <UploadBox onUpload={upload} loading={loading} error={error} />
-                        ) : (
-                            <RAGChatWindow
-                                messages={messages}
-                                onSend={send}
-                                loading={loading}
-                                disabled={loading}
-                                error={error}
-                                onNewDocument={reset}
-                            />
-                        )}
+                        <LearningLayout
+                            activeId={activeSection}
+                            onNavigate={setActiveSection}
+                            rag={rag}
+                        />
                     </div>
                 </div>
             </main>
 
             <footer className="app-footer">
-                Connects to <code>http://localhost:5001/api/rag</code> · answers use only your
-                indexed PDF text
+                Backend: <code>http://localhost:5001/api/chat</code> (stream) ·{" "}
+                <code>/api/rag</code> (PDF Q&amp;A)
             </footer>
         </div>
     );
