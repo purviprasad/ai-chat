@@ -17,13 +17,15 @@ function App() {
                         <span className="app-logo-mark" aria-hidden />
                         AIChat lab
                     </div>
-                    <p className="app-tagline">
+                    
+                </div>
+                <div className="app-pill">Hands-on</div>
+                
+            </header>
+            <p className="app-tagline">
                         One UI for a 12–16 week roadmap: each phase explains what to learn and what to
                         ship. Phase 1 (streaming) and Phase 2 (RAG) run against your local Node server.
                     </p>
-                </div>
-                <span className="app-pill">Hands-on</span>
-            </header>
 
             <main className="app-main">
                 <div className="app-card">
