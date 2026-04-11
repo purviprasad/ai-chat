@@ -1,28 +1,33 @@
 import { useState, useRef, useEffect } from "react";
-import { useChat } from "../hooks/useChat.js";
 import MessageBubble from "./MessageBubble";
 import Loader from "./Loader";
 
-export default function ChatWindow() {
-    const { messages, send, isLoading } = useChat();
+export default function RAGChatWindow({
+    messages,
+    onSend,
+    loading,
+    disabled,
+    error,
+    onNewDocument,
+}) {
     const [input, setInput] = useState("");
-    const [error, setError] = useState(null);
     const scrollRef = useRef(null);
 
     useEffect(() => {
         const el = scrollRef.current;
         if (el) el.scrollTop = el.scrollHeight;
-    }, [messages, isLoading]);
+    }, [messages, loading]);
 
-    const handleSend = async () => {
-        const text = input.trim();
-        if (!text || isLoading) return;
-        setError(null);
+    const handleSend = () => {
+        if (!input.trim() || loading) return;
+        onSend(input.trim());
         setInput("");
-        try {
-            await send(text);
-        } catch (e) {
-            setError(e instanceof Error ? e.message : "Request failed");
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
         }
     };
 
@@ -30,22 +35,25 @@ export default function ChatWindow() {
         <div className="chat-root">
             <div className="chat-toolbar">
                 <div>
-                    <h2 className="chat-toolbar-title">Streaming chat</h2>
-                    <p className="chat-toolbar-sub">Phase 1 · Gemini stream from your Node server</p>
+                    <h2 className="chat-toolbar-title">Chat with your PDF</h2>
+                    <p className="chat-toolbar-sub">Answers are limited to the uploaded document.</p>
                 </div>
+                <button type="button" className="btn btn-ghost" onClick={onNewDocument}>
+                    New document
+                </button>
             </div>
 
             <div className="chat-scroll" ref={scrollRef}>
-                {messages.length === 0 && !isLoading ? (
+                {messages.length === 0 && !loading ? (
                     <div className="chat-empty">
                         <strong>No messages yet</strong>
-                        <span>Send a prompt — tokens stream into the assistant bubble as they arrive.</span>
+                        <span>Ask a question about facts, definitions, or sections in your PDF.</span>
                     </div>
                 ) : null}
                 {messages.map((msg, i) => (
                     <MessageBubble key={i} role={msg.role} content={msg.content} />
                 ))}
-                {isLoading ? <Loader /> : null}
+                {loading ? <Loader /> : null}
             </div>
 
             {error ? <p className="alert">{error}</p> : null}
@@ -56,21 +64,16 @@ export default function ChatWindow() {
                     rows={2}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault();
-                            handleSend();
-                        }
-                    }}
-                    placeholder="Message the model…"
-                    disabled={isLoading}
-                    aria-label="Chat message"
+                    onKeyDown={handleKeyDown}
+                    placeholder="Ask something about the PDF…"
+                    disabled={disabled}
+                    aria-label="Message"
                 />
                 <button
                     type="button"
                     className="btn btn-primary"
                     onClick={handleSend}
-                    disabled={isLoading || !input.trim()}
+                    disabled={loading || disabled || !input.trim()}
                 >
                     Send
                 </button>
