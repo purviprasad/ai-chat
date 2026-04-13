@@ -1,3 +1,4 @@
+/* Global design tokens + base element reset for the full app. */
 :root {
   color-scheme: dark;
   --font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;

@@ -1,4 +1,7 @@
-/** 12–16 week roadmap: AI integration focus (structured for the learning lab UI). */
+/**
+ * 12–16 week AI-integration roadmap data used by the learning lab UI.
+ * Kept as plain objects so content can be rendered by reusable phase components.
+ */
 
 export const roadmapIntro = {
     headline: "AI-enabled full stack · 12–16 weeks",

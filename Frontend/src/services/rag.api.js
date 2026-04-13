@@ -1,3 +1,7 @@
+/**
+ * API helpers for Phase 2 RAG endpoints.
+ * Handles PDF upload and question querying, with normalized error handling.
+ */
 const BASE_URL = "http://localhost:5001/api/rag";
 
 async function parseJsonSafe(res) {
@@ -8,6 +12,9 @@ async function parseJsonSafe(res) {
     }
 }
 
+/**
+ * Uploads a PDF file for indexing on the backend.
+ */
 export const uploadPDF = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -23,6 +30,9 @@ export const uploadPDF = async (file) => {
     return body;
 };
 
+/**
+ * Sends a user question and returns the backend's grounded answer payload.
+ */
 export const askQuestion = async (question) => {
     const res = await fetch(`${BASE_URL}/query`, {
         method: "POST",

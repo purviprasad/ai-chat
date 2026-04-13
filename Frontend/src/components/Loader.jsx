@@ -1,3 +1,6 @@
+/**
+ * Reusable loading indicator used while waiting on model responses.
+ */
 export default function Loader() {
     return (
         <div className="loader-row" role="status" aria-live="polite">

@@ -1,3 +1,7 @@
+/**
+ * Phase 2 RAG chat panel.
+ * Shows conversation grounded to uploaded PDF content and composer for follow-up questions.
+ */
 import { useState, useRef, useEffect } from "react";
 import MessageBubble from "./MessageBubble";
 import Loader from "./Loader";
@@ -15,6 +19,7 @@ export default function RAGChatWindow({
 
     useEffect(() => {
         const el = scrollRef.current;
+        // Auto-scroll when new messages are appended or loading state changes.
         if (el) el.scrollTop = el.scrollHeight;
     }, [messages, loading]);
 

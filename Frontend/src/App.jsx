@@ -1,10 +1,16 @@
+/**
+ * App shell for the AI learning lab UI.
+ * Holds the active roadmap section and shared RAG chat state.
+ */
 import { useState } from "react";
 import "./App.css";
 import LearningLayout from "./components/LearningLayout";
 import { useRagChat } from "./hooks/useRagChat";
 
 function App() {
+    // Controls which section/phase is visible in the roadmap workspace.
     const [activeSection, setActiveSection] = useState("overview");
+    // Shared RAG state is kept here so it survives navigation between phases.
     const rag = useRagChat();
 
     return (

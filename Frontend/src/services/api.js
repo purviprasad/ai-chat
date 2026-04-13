@@ -1,3 +1,7 @@
+/**
+ * API helper for Phase 1 streaming chat.
+ * Sends a prompt to the backend and forwards streamed text chunks to the UI callback.
+ */
 export const sendMessage = async (message, onChunk) => {
     const response = await fetch("http://localhost:5001/api/chat", {
         method: "POST",
@@ -16,6 +20,7 @@ export const sendMessage = async (message, onChunk) => {
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
 
+    // Read the response stream incrementally to render assistant output in real time.
     while (true) {
         const { done, value } = await reader.read();
         if (done) break;
