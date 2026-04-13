@@ -1,3 +1,7 @@
+/**
+ * Presentation component for a single chat message.
+ * Styles user/assistant bubbles differently while keeping shared markup.
+ */
 export default function MessageBubble({ role, content }) {
     const isUser = role === "user";
     return (

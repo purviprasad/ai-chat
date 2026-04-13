@@ -1,3 +1,7 @@
+/**
+ * PDF upload UI for the RAG workflow.
+ * Supports file picker + drag/drop, then delegates upload action to parent state.
+ */
 import { useState, useCallback } from "react";
 
 export default function UploadBox({ onUpload, loading, error }) {
@@ -5,6 +9,7 @@ export default function UploadBox({ onUpload, loading, error }) {
     const [dragActive, setDragActive] = useState(false);
 
     const pickFile = useCallback((f) => {
+        // Guard against unsupported file types before enabling upload.
         if (f && f.type === "application/pdf") setFile(f);
     }, []);
 

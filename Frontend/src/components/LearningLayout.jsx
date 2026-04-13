@@ -1,3 +1,10 @@
+/**
+ * Learning-lab layout that maps the roadmap plan into UI sections.
+ * Includes:
+ * - navigation between overview/phases/portfolio
+ * - phase content blocks
+ * - embedded live demos for Phase 1 (streaming) and Phase 2 (RAG)
+ */
 import UploadBox from "./UploadBox";
 import RAGChatWindow from "./RAGChatWindow";
 import ChatWindow from "./ChatWindow";
@@ -23,6 +30,7 @@ function ListBlock({ title, items }) {
     );
 }
 
+/** Overview screen with quick access cards to each phase. */
 function OverviewPanel({ onGo }) {
     return (
         <div className="overview-panel">
@@ -65,6 +73,7 @@ function OverviewPanel({ onGo }) {
     );
 }
 
+/** Generic phase renderer for learn/tools/resources/build sections. */
 function PhasePanel({ phase }) {
     return (
         <div className="phase-panel">
@@ -91,6 +100,7 @@ function PhasePanel({ phase }) {
     );
 }
 
+/** Final outcomes section used as a portfolio checklist. */
 function PortfolioPanel() {
     const p = portfolioSection;
     return (
@@ -116,6 +126,7 @@ function PortfolioPanel() {
     );
 }
 
+/** Placeholder content for phases that are planned but not implemented as live demos yet. */
 function PlannedDemoCallout({ phase }) {
     return (
         <div className="planned-callout">
@@ -129,6 +140,7 @@ function PlannedDemoCallout({ phase }) {
     );
 }
 
+/** Top-level orchestrator for roadmap content + contextual live demo rendering. */
 export default function LearningLayout({ activeId, onNavigate, rag }) {
     const phase = phases.find((p) => p.id === activeId);
 

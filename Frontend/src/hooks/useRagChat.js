@@ -1,3 +1,7 @@
+/**
+ * Hook for Phase 2 RAG chat flow.
+ * Manages upload lifecycle, question/answer messages, and error/loading state.
+ */
 import { useState, useCallback } from "react";
 import { askQuestion, uploadPDF } from "../services/rag.api";
 
@@ -8,6 +12,7 @@ export const useRagChat = () => {
     const [error, setError] = useState(null);
 
     const reset = useCallback(() => {
+        // Clears phase-2 session so a new document can be uploaded.
         setUploaded(false);
         setMessages([]);
         setError(null);

@@ -1,3 +1,7 @@
+/**
+ * Phase 1 demo panel.
+ * Renders a streaming chat UI backed by useChat (POST /api/chat).
+ */
 import { useState, useRef, useEffect } from "react";
 import { useChat } from "../hooks/useChat.js";
 import MessageBubble from "./MessageBubble";
@@ -11,6 +15,7 @@ export default function ChatWindow() {
 
     useEffect(() => {
         const el = scrollRef.current;
+        // Keep newest tokens/messages in view during stream updates.
         if (el) el.scrollTop = el.scrollHeight;
     }, [messages, isLoading]);
 
